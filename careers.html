@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - AutoClean BD</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .page-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            padding: 2rem 0;
+        }
+        
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        
+        .career-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .job-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .job-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-type {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .job-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .job-requirements {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .apply-btn {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="content-container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            
+            <div class="page-header">
+                <h1 class="page-title">Join Our Team</h1>
+                <p class="page-subtitle">Build your career with AutoClean BD and help us revolutionize vehicle care in Bangladesh</p>
+            </div>
+            
+            <div class="career-section">
+                <h2 class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    Current Openings
+                </h2>
+                
+                <div class="job-grid">
+                    <div class="job-card">
+                        <h3 class="job-title">Vehicle Cleaning Specialist</h3>
+                        <div class="job-type">Full-time • Dhaka</div>
+                        <p class="job-description">Join our team of professional vehicle cleaners and help deliver exceptional service to our customers.</p>
+                        <div class="job-requirements">
+                            <strong>Requirements:</strong> Experience in vehicle cleaning, attention to detail, physical fitness
+                        </div>
+                        <a href="#contact" class="apply-btn">Apply Now</a>
+                    </div>
+                    
+                    <div class="job-card">
+                        <h3 class="job-title">Customer Service Representative</h3>
+                        <div class="job-type">Full-time • Dhaka</div>
+                        <p class="job-description">Provide excellent customer support and help manage bookings and inquiries.</p>
+                        <div class="job-requirements">
+                            <strong>Requirements:</strong> Strong communication skills, customer service experience, bilingual (Bengali/English)
+                        </div>
+                        <a href="#contact" class="apply-btn">Apply Now</a>
+                    </div>
+                    
+                    <div class="job-card">
+                        <h3 class="job-title">Operations Manager</h3>
+                        <div class="job-type">Full-time • Dhaka</div>
+                        <p class="job-description">Oversee daily operations, manage teams, and ensure service quality standards.</p>
+                        <div class="job-requirements">
+                            <strong>Requirements:</strong> Management experience, operations background, leadership skills
+                        </div>
+                        <a href="#contact" class="apply-btn">Apply Now</a>
+                    </div>
+                    
+                    <div class="job-card">
+                        <h3 class="job-title">Marketing Specialist</h3>
+                        <div class="job-type">Full-time • Dhaka</div>
+                        <p class="job-description">Develop and execute marketing strategies to grow our customer base.</p>
+                        <div class="job-requirements">
+                            <strong>Requirements:</strong> Marketing experience, digital marketing skills, creative thinking
+                        </div>
+                        <a href="#contact" class="apply-btn">Apply Now</a>
+                    </div>
+                    
+                    <div class="job-card">
+                        <h3 class="job-title">Mobile App Developer</h3>
+                        <div class="job-type">Full-time • Remote</div>
+                        <p class="job-description">Develop and maintain our mobile applications for iOS and Android platforms.</p>
+                        <div class="job-requirements">
+                            <strong>Requirements:</strong> Mobile development experience, React Native/Flutter, API integration
+                        </div>
+                        <a href="#contact" class="apply-btn">Apply Now</a>
+                    </div>
+                    
+                    <div class="job-card">
+                        <h3 class="job-title">Quality Assurance Specialist</h3>
+                        <div class="job-type">Part-time • Dhaka</div>
+                        <p class="job-description">Ensure service quality standards and conduct quality checks on completed work.</p>
+                        <div class="job-requirements">
+                            <strong>Requirements:</strong> Attention to detail, quality control experience, vehicle knowledge
+                        </div>
+                        <a href="#contact" class="apply-btn">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="career-section">
+                <h2 class="section-title">
+                    <i class="fas fa-heart"></i>
+                    Why Work With Us
+                </h2>
+                <div style="color: #cbd5e1; line-height: 1.7;">
+                    <p>At AutoClean BD, we believe in creating a positive work environment where our team members can grow and thrive. We offer:</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Competitive salary and benefits</li>
+                        <li>Professional development opportunities</li>
+                        <li>Flexible working hours</li>
+                        <li>Health insurance coverage</li>
+                        <li>Performance-based bonuses</li>
+                        <li>Team building activities</li>
+                        <li>Career advancement opportunities</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="career-section" id="contact">
+                <h2 class="section-title">
+                    <i class="fas fa-envelope"></i>
+                    Apply Now
+                </h2>
+                <div style="color: #cbd5e1; line-height: 1.7;">
+                    <p>To apply for any of our open positions, please send your resume and cover letter to:</p>
+                    <p><strong>Email:</strong> careers@autocleanbd.com</p>
+                    <p><strong>Subject:</strong> [Position Name] - Application</p>
+                    <p>We review all applications and will contact qualified candidates within 1-2 weeks.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

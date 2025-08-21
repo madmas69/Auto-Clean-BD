@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AutoClean BD</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .auth-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 12px;
+        }
+        
+        .auth-logo .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .auth-title {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-subtitle {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 0.875rem;
+        }
+        
+        .form-group input {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .form-group.error input {
+            border-color: #ef4444;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        
+        .user-type-toggle {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .user-type-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .user-type-btn.active {
+            background: white;
+            color: #3b82f6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: -0.5rem;
+        }
+        
+        .forgot-password a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+        
+        .auth-divider span {
+            padding: 0 1rem;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .social-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .auth-footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #6b7280;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-home:hover {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+    
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <div class="logo-icon">AC</div>
+                    <span class="logo-text">AutoClean BD</span>
+                </div>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to your account to continue</p>
+            </div>
+            
+            <div class="user-type-toggle">
+                <button class="user-type-btn active" data-type="customer">Customer</button>
+                <button class="user-type-btn" data-type="admin">Admin</button>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="forgot-password.html">Forgot your password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+            
+            <div class="auth-divider">
+                <span>or continue with</span>
+            </div>
+            
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-facebook"></i>
+                    Facebook
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="register.html">Sign up</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+    
+    <script>
+        const BASE_URL = (location.port && location.port !== '80' && location.port !== '443') ? 'http://localhost/web/' : (window.location.origin + '/web/');
+        
+        // User type toggle
+        const userTypeBtns = document.querySelectorAll('.user-type-btn');
+        const loginForm = document.getElementById('loginForm');
+        const toast = document.getElementById('toast');
+        
+        userTypeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                userTypeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+        
+        // Form validation
+        function validateForm() {
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            let isValid = true;
+            
+            // Reset error states
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+                const errorMsg = group.querySelector('.error-message');
+                if (errorMsg) errorMsg.remove();
+            });
+            
+            // Email validation
+            if (!email.value.trim()) {
+                showFieldError(email, 'Email is required');
+                isValid = false;
+            } else if (!isValidEmail(email.value)) {
+                showFieldError(email, 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Password validation
+            if (!password.value.trim()) {
+                showFieldError(password, 'Password is required');
+                isValid = false;
+            } else if (password.value.length < 6) {
+                showFieldError(password, 'Password must be at least 6 characters');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        function showFieldError(field, message) {
+            const formGroup = field.closest('.form-group');
+            formGroup.classList.add('error');
+            
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = message;
+            formGroup.appendChild(errorMsg);
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+            
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing In...';
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(loginForm);
+            const userType = document.querySelector('.user-type-btn.active').dataset.type;
+            
+            const loginData = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                userType: userType
+            };
+            
+            try {
+                const response = await fetch(`${BASE_URL}api/login.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('Login successful! Redirecting...', 'success');
+                    
+                    // Store user data in session/localStorage
+                    const user = result.data;
+                    if (user) {
+                        localStorage.setItem('userData', JSON.stringify(user));
+                        localStorage.setItem('userType', user.user_type || userType);
+                    }
+                    
+                    // Redirect based on user type
+                    setTimeout(() => {
+                        const finalType = (user && (user.user_type || user.userType)) || userType;
+                        switch (finalType) {
+                            case 'admin':
+                                window.location.href = 'admin/dashboard.html';
+                                break;
+                            case 'customer':
+                                window.location.href = 'customer/dashboard.html';
+                                break;
+                            case 'worker':
+                                window.location.href = 'worker/dashboard.html';
+                                break;
+                            default:
+                                window.location.href = 'index.html';
+                        }
+                    }, 1500);
+                } else {
+                    showToast(result.message || 'Login failed. Please check your credentials.', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('An error occurred. Please try again.', 'error');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Toast notification
+        function showToast(message, type = 'default') {
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Production build: demo helpers removed
+    </script>
+</body>
+</html> 

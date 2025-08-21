@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoClean BD - Premium Car & Bike Washing Service</title>
+    <meta name="description" content="Professional car and bike washing services in Bangladesh. Premium cleaning solutions for your vehicles.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                            800: '#1e40af', 900: '#1e3a8a'
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155',
+                            800: '#1e293b', 900: '#0f172a'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.3s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'toast-slide': 'toastSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideIn: { '0%': { transform: 'translateY(-20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        bounceIn: { '0%': { transform: 'scale(0.3)', opacity: '0' }, '50%': { transform: 'scale(1.05)' }, '70%': { transform: 'scale(0.9)' }, '100%': { transform: 'scale(1)', opacity: '1' } },
+                        toastSlide: { '0%': { transform: 'translateX(400px) scale(0.8)', opacity: '0' }, '100%': { transform: 'translateX(0) scale(1)', opacity: '1' } }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .text-gradient { background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .shadow-glow { box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25); }
+        .shadow-glow-lg { box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3); }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        /* Modal animations */
+        .modal { transition: all 0.3s ease; }
+        .modal-content { transition: all 0.3s ease; }
+        
+        /* Toast animations */
+        .toast { transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+    </style>
+</head>
+<body class="bg-dark-900 text-dark-100 antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-gradient">
+                        <i class="fas fa-car-wash mr-2"></i>AutoClean BD
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-dark-300 hover:text-primary-400 transition-colors duration-300">Home</a>
+                    <a href="#services" class="nav-link text-dark-300 hover:text-primary-400 transition-colors duration-300">Services</a>
+                    <a href="#about" class="nav-link text-dark-300 hover:text-primary-400 transition-colors duration-300">About</a>
+                    <a href="#contact" class="nav-link text-dark-300 hover:text-primary-400 transition-colors duration-300">Contact</a>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="nav-buttons flex items-center space-x-4">
+                    <button onclick="openLoginModal()" class="btn-secondary bg-dark-700 text-dark-100 border border-dark-600 hover:bg-dark-600 hover:border-dark-500 px-6 py-2 rounded-lg font-medium transition-all duration-300">
+                        Login
+                    </button>
+                    <button onclick="openRegisterModal()" class="btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-2 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        Register
+                    </button>
+                    <button onclick="testBackendConnection()" class="btn-secondary bg-dark-700 text-dark-100 border border-dark-600 hover:bg-dark-600 hover:border-dark-500 px-3 py-2 rounded-lg font-medium transition-all duration-300 text-xs">
+                        Test
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="navToggle" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="navMenu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#home" class="block px-3 py-2 text-dark-300 hover:text-primary-400 transition-colors duration-300">Home</a>
+                    <a href="#services" class="block px-3 py-2 text-dark-300 hover:text-primary-400 transition-colors duration-300">Services</a>
+                    <a href="#about" class="block px-3 py-2 text-dark-300 hover:text-primary-400 transition-colors duration-300">About</a>
+                    <a href="#contact" class="block px-3 py-2 text-dark-300 hover:text-primary-400 transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-dark-900 via-dark-800 to-primary-900/20 pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="space-y-8 animate-fade-in">
+                    <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+                        Professional Vehicle Wash Services
+                        <span class="text-gradient block">in Bangladesh</span>
+                    </h1>
+                    <p class="text-xl text-dark-300 leading-relaxed">
+                        Experience premium car and bike washing services with our professional team. 
+                        Book online, track progress, and enjoy spotless results.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="scrollToServices()" class="btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-8 py-4 rounded-lg font-medium transition-all duration-300 shadow-glow hover:shadow-glow-lg transform hover:-translate-y-1 flex items-center justify-center">
+                            <i class="fas fa-play mr-2"></i>
+                            Our Services
+                        </button>
+                        <button onclick="openBookingModal()" class="btn-secondary bg-dark-700 text-dark-100 border border-dark-600 hover:bg-dark-600 hover:border-dark-500 px-8 py-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-calendar mr-2"></i>
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Hero Image and Stats -->
+                <div class="relative animate-slide-in">
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Professional Car Wash" 
+                             class="w-full h-96 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent"></div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-dark-800 border border-dark-700 rounded-xl p-6 shadow-xl">
+                        <div class="grid grid-cols-3 gap-8">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary-400">1000+</div>
+                                <div class="text-sm text-dark-300">Happy Customers</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary-400">5000+</div>
+                                <div class="text-sm text-dark-300">Vehicles Washed</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary-400">4.8</div>
+                                <div class="text-sm text-dark-300">Customer Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-4 text-gradient">Our Services</h2>
+                <p class="text-xl text-dark-300 max-w-2xl mx-auto">
+                    Choose from our range of professional vehicle washing services
+                </p>
+            </div>
+            
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Basic Wash -->
+                <div class="service-card bg-dark-700 border border-dark-600 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary-500 hover:transform hover:-translate-y-2 cursor-pointer">
+                    <div class="service-image mb-4">
+                        <img src="https://static.wixstatic.com/media/6f5853_d358b2026ac54242ba20135567662bf4~mv2.jpeg/v1/fill/w_1000,h_666,al_c/6f5853_d358b2026ac54242ba20135567662bf4~mv2.jpeg
+                        " 
+                             alt="Basic Car Wash" 
+                             class="w-full h-48 object-cover rounded-lg transition-transform duration-300 hover:scale-105">
+                    </div>
+                    <div class="service-icon mb-4">
+                        <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-car text-white text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="text-xl font-bold mb-2 text-dark-100">Basic Wash</h3>
+                        <p class="text-dark-300 mb-4">Exterior wash, tire cleaning, and basic interior cleaning</p>
+                        <div class="service-pricing mb-4 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="vehicle text-dark-300">Car</span>
+                                <span class="price text-lg font-bold text-primary-400">৳299</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="vehicle text-dark-300">Bike</span>
+                                <span class="price text-lg font-bold text-primary-400">৳199</span>
+                            </div>
+                        </div>
+                        <button onclick="bookService('Basic')" class="w-full btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                            <i class="fas fa-calendar mr-2"></i>
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Premium Wash -->
+                <div class="service-card bg-dark-700 border border-primary-500 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-2 cursor-pointer relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                        Most Popular
+                    </div>
+                    <div class="service-image mb-4">
+                        <img src="https://1.bp.blogspot.com/-5VN6G0w4JFo/XAa4zLRHU_I/AAAAAAAAS9w/tBRvvoIGSdwtxZpYRqc16uzOKe92GV3zACLcBGAs/s1600/Blue%2BKawasaki%2BSport%2BBike.jpg
+                        " 
+                             alt="Premium Motorcycle Wash" 
+                             class="w-full h-48 object-cover rounded-lg transition-transform duration-300 hover:scale-105">
+                    </div>
+                    <div class="service-icon mb-4">
+                        <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-motorcycle text-white text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="text-xl font-bold mb-2 text-dark-100">Premium Wash</h3>
+                        <p class="text-dark-300 mb-4">Complete exterior and interior cleaning with premium products</p>
+                        <div class="service-pricing mb-4 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="vehicle text-dark-300">Car</span>
+                                <span class="price text-lg font-bold text-primary-400">৳599</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="vehicle text-dark-300">Bike</span>
+                                <span class="price text-lg font-bold text-primary-400">৳399</span>
+                            </div>
+                        </div>
+                        <button onclick="bookService('Premium')" class="w-full btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                            <i class="fas fa-calendar mr-2"></i>
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Detailing -->
+                <div class="service-card bg-dark-700 border border-dark-600 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary-500 hover:transform hover:-translate-y-2 cursor-pointer">
+                    <div class="service-image mb-4">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Bike Detailing" 
+                             class="w-full h-48 object-cover rounded-lg transition-transform duration-300 hover:scale-105">
+                    </div>
+                    <div class="service-icon mb-4">
+                        <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-sparkles text-white text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3 class="text-xl font-bold mb-2 text-dark-100">Detailing</h3>
+                        <p class="text-dark-300 mb-4">Professional detailing with paint protection and interior deep cleaning</p>
+                        <div class="service-pricing mb-4 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="vehicle text-dark-300">Car</span>
+                                <span class="price text-lg font-bold text-primary-400">৳1299</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="vehicle text-dark-300">Bike</span>
+                                <span class="price text-lg font-bold text-primary-400">৳899</span>
+                            </div>
+                        </div>
+                        <button onclick="bookService('Detailing')" class="w-full btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                            <i class="fas fa-calendar mr-2"></i>
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-4 text-gradient">Our Premium Services</h2>
+                <p class="text-xl text-dark-300 max-w-2xl mx-auto">
+                    Take a look at our professional vehicle washing and detailing services
+                </p>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img src="https://static.vecteezy.com/system/resources/previews/040/329/234/non_2x/washing-luxury-black-car-on-touchless-car-wash-cleaning-the-details-of-car-washing-sedan-car-with-foam-self-service-and-high-pressure-water-cleanliness-and-order-in-urban-environment-photo.jpg
+
+                    " 
+                         alt="Professional Car Washing" 
+                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/40 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Professional Car Washing</h3>
+                        <p class="text-dark-200">Exterior and interior cleaning with premium products</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img src="https://motodomains.com/wp-content/uploads/2017/09/washing-your-bike.jpg
+                    " 
+                         alt="Motorcycle Washing" 
+                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/40 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Motorcycle Washing</h3>
+                        <p class="text-dark-200">Complete bike cleaning and detailing services</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Luxury Car Detailing" 
+                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/40 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Luxury Car Detailing</h3>
+                        <p class="text-dark-200">Premium detailing for luxury vehicles</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Bike Detailing" 
+                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/40 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Bike Detailing</h3>
+                        <p class="text-dark-200">Professional motorcycle detailing and protection</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img src="https://image.shutterstock.com/image-photo/two-young-male-janitors-cleaning-260nw-1529074037.jpg" 
+                         alt="Our Professional Team" 
+                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/40 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Our Professional Team</h3>
+                        <p class="text-dark-200">Trained and experienced cleaning professionals</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img src="https://static.wixstatic.com/media/6f5853_d358b2026ac54242ba20135567662bf4~mv2.jpeg/v1/fill/w_1000,h_666,al_c/6f5853_d358b2026ac54242ba20135567662bf4~mv2.jpeg" 
+                         alt="Premium Service" 
+                         class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/40 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Premium Service</h3>
+                        <p class="text-dark-200">Quality service guaranteed for all vehicles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-4 text-gradient">How It Works</h2>
+                <p class="text-xl text-dark-300 max-w-2xl mx-auto">
+                    Simple steps to get your vehicle professionally cleaned
+                </p>
+            </div>
+            
+            <!-- Steps Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="step-card bg-dark-700 border border-dark-600 rounded-xl p-8 text-center hover:border-primary-500 hover:transform hover:-translate-y-2 transition-all duration-300">
+                    <div class="step-number w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+                    <div class="step-icon mb-6">
+                        <div class="w-16 h-16 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-calendar-check text-primary-400 text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark-100">Book Online</h3>
+                    <p class="text-dark-300">Choose your service and schedule a convenient time slot</p>
+                </div>
+                
+                <div class="step-card bg-dark-700 border border-dark-600 rounded-xl p-8 text-center hover:border-primary-500 hover:transform hover:-translate-y-2 transition-all duration-300">
+                    <div class="step-number w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+                    <div class="step-icon mb-6">
+                        <div class="w-16 h-16 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-user-tie text-primary-400 text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark-100">Professional Service</h3>
+                    <p class="text-dark-300">Our trained workers arrive at your location with all equipment</p>
+                </div>
+                
+                <div class="step-card bg-dark-700 border border-dark-600 rounded-xl p-8 text-center hover:border-primary-500 hover:transform hover:-translate-y-2 transition-all duration-300">
+                    <div class="step-number w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+                    <div class="step-icon mb-6">
+                        <div class="w-16 h-16 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-check-circle text-primary-400 text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark-100">Quality Check</h3>
+                    <p class="text-dark-300">We ensure your vehicle meets our high-quality standards</p>
+                </div>
+                
+                <div class="step-card bg-dark-700 border border-dark-600 rounded-xl p-8 text-center hover:border-primary-500 hover:transform hover:-translate-y-2 transition-all duration-300">
+                    <div class="step-number w-16 h-16 bg-primary-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">4</div>
+                    <div class="step-icon mb-6">
+                        <div class="w-16 h-16 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-smile text-primary-400 text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark-100">Enjoy Results</h3>
+                    <p class="text-dark-300">Your vehicle is spotless and ready to shine on the road</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-4 text-gradient">Pricing Plans</h2>
+                <p class="text-xl text-dark-300 max-w-2xl mx-auto">
+                    Transparent pricing for all vehicle types
+                </p>
+            </div>
+            
+            <!-- Pricing Table -->
+            <div class="bg-dark-800 border border-dark-700 rounded-xl overflow-hidden shadow-xl">
+                <div class="pricing-header bg-dark-700 border-b border-dark-600">
+                    <div class="grid grid-cols-4 gap-4 p-6">
+                        <div class="pricing-col font-bold text-dark-100">Service</div>
+                        <div class="pricing-col font-bold text-dark-100">Car</div>
+                        <div class="pricing-col font-bold text-dark-100">Bike</div>
+                        <div class="pricing-col font-bold text-dark-100">Duration</div>
+                    </div>
+                </div>
+                
+                <div class="pricing-row border-b border-dark-600 hover:bg-dark-700 transition-colors duration-200">
+                    <div class="grid grid-cols-4 gap-4 p-6">
+                        <div class="pricing-col text-dark-100 font-medium">Basic Wash</div>
+                        <div class="pricing-col text-primary-400 font-bold">৳299</div>
+                        <div class="pricing-col text-primary-400 font-bold">৳199</div>
+                        <div class="pricing-col text-dark-300">30-45 min</div>
+                    </div>
+                </div>
+                
+                <div class="pricing-row border-b border-dark-600 hover:bg-dark-700 transition-colors duration-200">
+                    <div class="grid grid-cols-4 gap-4 p-6">
+                        <div class="pricing-col text-dark-100 font-medium">Premium Wash</div>
+                        <div class="pricing-col text-primary-400 font-bold">৳599</div>
+                        <div class="pricing-col text-primary-400 font-bold">৳399</div>
+                        <div class="pricing-col text-dark-300">45-60 min</div>
+                    </div>
+                </div>
+                
+                <div class="pricing-row hover:bg-dark-700 transition-colors duration-200">
+                    <div class="grid grid-cols-4 gap-4 p-6">
+                        <div class="pricing-col text-dark-100 font-medium">Detailing</div>
+                        <div class="pricing-col text-primary-400 font-bold">৳1299</div>
+                        <div class="pricing-col text-primary-400 font-bold">৳899</div>
+                        <div class="pricing-col text-dark-300">2-3 hours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="about-text space-y-8">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gradient">About AutoClean BD</h2>
+                    <p class="text-xl text-dark-300 leading-relaxed">
+                        AutoClean BD is a leading vehicle washing service provider in Bangladesh, 
+                        offering professional car and bike cleaning services at your doorstep. 
+                        Our mission is to provide convenient, high-quality vehicle care that saves 
+                        you time and keeps your vehicle looking its best.
+                    </p>
+                    <div class="about-features space-y-4">
+                        <div class="feature flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-dark-100 font-medium">Professional trained workers</span>
+                        </div>
+                        <div class="feature flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-dark-100 font-medium">Premium cleaning products</span>
+                        </div>
+                        <div class="feature flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-dark-100 font-medium">Convenient online booking</span>
+                        </div>
+                        <div class="feature flex items-center space-x-4">
+                            <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <span class="text-dark-100 font-medium">Real-time service tracking</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Our Team" 
+                             class="w-full h-96 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-4 text-gradient">Contact Us</h2>
+                <p class="text-xl text-dark-300 max-w-2xl mx-auto">
+                    Get in touch with us for any questions or support
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="contact-info space-y-8">
+                    <div class="contact-item flex items-start space-x-4">
+                        <div class="contact-icon w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 class="text-xl font-bold text-dark-100 mb-2">Address</h3>
+                            <p class="text-dark-300">Bashundhara Residential Area, Dhaka, Bangladesh</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item flex items-start space-x-4">
+                        <div class="contact-icon w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-white text-xl"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 class="text-xl font-bold text-dark-100 mb-2">Phone</h3>
+                            <p class="text-dark-300">+880 1234 567 890</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item flex items-start space-x-4">
+                        <div class="contact-icon w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-white text-xl"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 class="text-xl font-bold text-dark-100 mb-2">Email</h3>
+                            <p class="text-dark-300">info@autocleanbd.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item flex items-start space-x-4">
+                        <div class="contact-icon w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-clock text-white text-xl"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 class="text-xl font-bold text-dark-100 mb-2">Business Hours</h3>
+                            <p class="text-dark-300">Monday - Sunday: 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form bg-dark-800 border border-dark-700 rounded-xl p-8">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="form-group">
+                            <input type="text" id="contactName" name="name" placeholder="Your Name" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="contactEmail" name="email" placeholder="Your Email" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="contactPhone" name="phone" placeholder="Your Phone" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contactMessage" name="message" placeholder="Your Message" rows="5" required 
+                                      class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300 resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="footer-section space-y-4">
+                    <div class="footer-logo flex items-center space-x-2">
+                        <i class="fas fa-car-wash text-primary-400 text-2xl"></i>
+                        <span class="text-2xl font-bold text-gradient">AutoClean BD</span>
+                    </div>
+                    <p class="text-dark-300">Professional vehicle washing services at your doorstep.</p>
+                    <div class="social-links flex space-x-4">
+                        <a href="https://facebook.com/autocleanbd" target="_blank" class="w-10 h-10 bg-dark-700 rounded-lg flex items-center justify-center text-dark-300 hover:text-primary-400 hover:bg-dark-600 transition-colors duration-300">
+                            <i class="fab fa-facebook text-lg"></i>
+                        </a>
+                        <a href="https://twitter.com/autocleanbd" target="_blank" class="w-10 h-10 bg-dark-700 rounded-lg flex items-center justify-center text-dark-300 hover:text-primary-400 hover:bg-dark-600 transition-colors duration-300">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="https://instagram.com/autocleanbd" target="_blank" class="w-10 h-10 bg-dark-700 rounded-lg flex items-center justify-center text-dark-300 hover:text-primary-400 hover:bg-dark-600 transition-colors duration-300">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/autocleanbd" target="_blank" class="w-10 h-10 bg-dark-700 rounded-lg flex items-center justify-center text-dark-300 hover:text-primary-400 hover:bg-dark-600 transition-colors duration-300">
+                            <i class="fab fa-linkedin text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="text-xl font-bold text-dark-100 mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Basic Wash</a></li>
+                        <li><a href="#services" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Premium Wash</a></li>
+                        <li><a href="#services" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Detailing</a></li>
+                        <li><a href="#services" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Car Wash</a></li>
+                        <li><a href="#services" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Bike Wash</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="text-xl font-bold text-dark-100 mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">About Us</a></li>
+                        <li><a href="#contact" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Contact</a></li>
+                        <li><a href="privacy.html" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Terms of Service</a></li>
+                        <li><a href="careers.html" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Careers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="text-xl font-bold text-dark-100 mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="help.html" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Help Center</a></li>
+                        <li><a href="faq.html" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">FAQ</a></li>
+                        <li><a href="#contact" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Contact Support</a></li>
+                        <li><a href="feedback.html" class="text-dark-300 hover:text-primary-400 transition-colors duration-300">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom border-t border-dark-800 mt-8 pt-8 text-center">
+                <p class="text-dark-300">&copy; 2024 AutoClean BD. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0 bg-dark-900/80 backdrop-blur-sm"></div>
+        <div class="modal-content relative z-10 flex items-center justify-center min-h-screen p-4">
+            <div class="bg-dark-800 border border-dark-700 rounded-xl shadow-2xl w-full max-w-md max-h-screen overflow-y-auto">
+                <div class="modal-header flex items-center justify-between p-6 border-b border-dark-700">
+                    <h2 class="text-2xl font-bold text-dark-100">Login</h2>
+                    <button onclick="closeLoginModal()" class="text-dark-400 hover:text-dark-100 transition-colors duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-6">
+                    <form id="loginForm" class="space-y-6">
+                        <div class="form-group">
+                            <label for="loginEmail" class="block text-sm font-medium text-dark-100 mb-2">Email</label>
+                            <input type="email" id="loginEmail" name="email" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword" class="block text-sm font-medium text-dark-100 mb-2">Password</label>
+                            <input type="password" id="loginPassword" name="password" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginUserType" class="block text-sm font-medium text-dark-100 mb-2">Login As</label>
+                            <select id="loginUserType" name="userType" required 
+                                    class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                                <option value="">Select User Type</option>
+                                <option value="customer">Customer</option>
+                                <option value="admin">Admin</option>
+                                <option value="worker">Worker</option>
+                            </select>
+                        </div>
+                        <div class="form-actions flex space-x-4">
+                            <button type="submit" class="flex-1 btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Login
+                            </button>
+                            <button type="button" class="flex-1 btn-secondary bg-dark-700 text-dark-100 border border-dark-600 hover:bg-dark-600 hover:border-dark-500 px-6 py-3 rounded-lg font-medium transition-all duration-300" onclick="closeLoginModal()">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <div class="modal-footer mt-6 text-center">
+                        <p class="text-dark-300">Don't have an account? <a href="#" onclick="switchToRegister()" class="text-primary-400 hover:text-primary-300 transition-colors duration-300">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0 bg-dark-900/80 backdrop-blur-sm"></div>
+        <div class="modal-content relative z-10 flex items-center justify-center min-h-screen p-4">
+            <div class="bg-dark-800 border border-dark-700 rounded-xl shadow-2xl w-full max-w-lg max-h-screen overflow-y-auto">
+                <div class="modal-header flex items-center justify-between p-6 border-b border-dark-700">
+                    <h2 class="text-2xl font-bold text-dark-100">Register</h2>
+                    <button onclick="closeRegisterModal()" class="text-dark-400 hover:text-dark-100 transition-colors duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-6">
+                    <form id="registerForm" class="space-y-6">
+                        <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label for="registerFirstName" class="block text-sm font-medium text-dark-100 mb-2">First Name</label>
+                                <input type="text" id="registerFirstName" name="firstName" required 
+                                       class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                            </div>
+                            <div class="form-group">
+                                <label for="registerLastName" class="block text-sm font-medium text-dark-100 mb-2">Last Name</label>
+                                <input type="text" id="registerLastName" name="lastName" required 
+                                       class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail" class="block text-sm font-medium text-dark-100 mb-2">Email</label>
+                            <input type="email" id="registerEmail" name="email" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone" class="block text-sm font-medium text-dark-100 mb-2">Phone</label>
+                            <input type="tel" id="registerPhone" name="phone" required placeholder="+880 1XXXXXXXXX" 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerAddress" class="block text-sm font-medium text-dark-100 mb-2">Address</label>
+                            <textarea id="registerAddress" name="address" rows="3" required placeholder="Enter your complete address" 
+                                      class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300 resize-none"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerPassword" class="block text-sm font-medium text-dark-100 mb-2">Password</label>
+                            <input type="password" id="registerPassword" name="password" required placeholder="Minimum 6 characters" 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerConfirmPassword" class="block text-sm font-medium text-dark-100 mb-2">Confirm Password</label>
+                            <input type="password" id="registerConfirmPassword" name="confirmPassword" required 
+                                   class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerUserType" class="block text-sm font-medium text-dark-100 mb-2">Register As</label>
+                            <select id="registerUserType" name="userType" required 
+                                    class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                                <option value="">Select User Type</option>
+                                <option value="customer">Customer</option>
+                            </select>
+                        </div>
+                        <div class="form-actions flex space-x-4">
+                            <button type="submit" class="flex-1 btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                Register
+                            </button>
+                            <button type="button" class="flex-1 btn-secondary bg-dark-700 text-dark-100 border border-dark-600 hover:bg-dark-600 hover:border-dark-500 px-6 py-3 rounded-lg font-medium transition-all duration-300" onclick="closeRegisterModal()">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <div class="modal-footer mt-6 text-center">
+                        <p class="text-dark-300">Already have an account? <a href="#" onclick="switchToLogin()" class="text-primary-400 hover:text-primary-300 transition-colors duration-300">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0 bg-dark-900/80 backdrop-blur-sm"></div>
+        <div class="modal-content relative z-10 flex items-center justify-center min-h-screen p-4">
+            <div class="bg-dark-800 border border-dark-700 rounded-xl shadow-2xl w-full max-w-2xl max-h-screen overflow-y-auto">
+                <div class="modal-header flex items-center justify-between p-6 border-b border-dark-700">
+                    <h2 class="text-2xl font-bold text-dark-100">Book Service</h2>
+                    <button onclick="closeBookingModal()" class="text-dark-400 hover:text-dark-100 transition-colors duration-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-6">
+                    <form id="bookingForm" class="space-y-6">
+                        <div class="form-group">
+                            <label for="bookingVehicleType" class="block text-sm font-medium text-dark-100 mb-2">Vehicle Type</label>
+                            <select id="bookingVehicleType" name="vehicleType" required 
+                                    class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                                <option value="">Select Vehicle Type</option>
+                                <option value="car">Car</option>
+                                <option value="bike">Bike</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingServicePackage" class="block text-sm font-medium text-dark-100 mb-2">Service Package</label>
+                            <select id="bookingServicePackage" name="servicePackage" required 
+                                    class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                                <option value="">Select Package</option>
+                                <option value="Basic">Basic Wash</option>
+                                <option value="Premium">Premium Wash</option>
+                                <option value="Detailing">Detailing</option>
+                            </select>
+                        </div>
+                        <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label for="bookingDate" class="block text-sm font-medium text-dark-100 mb-2">Preferred Date</label>
+                                <input type="date" id="bookingDate" name="scheduledDate" required 
+                                       class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                            </div>
+                            <div class="form-group">
+                                <label for="bookingTime" class="block text-sm font-medium text-dark-100 mb-2">Preferred Time</label>
+                                <select id="bookingTime" name="scheduledTime" required 
+                                        class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                                    <option value="">Select Time</option>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingAddress" class="block text-sm font-medium text-dark-100 mb-2">Service Address</label>
+                            <textarea id="bookingAddress" name="address" rows="3" required placeholder="Enter your complete address" 
+                                      class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300 resize-none"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingPaymentMethod" class="block text-sm font-medium text-dark-100 mb-2">Payment Method</label>
+                            <select id="bookingPaymentMethod" name="paymentMethod" required 
+                                    class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 focus:outline-none focus:border-primary-500 transition-colors duration-300">
+                                <option value="">Select Payment Method</option>
+                                <option value="Cash on Delivery">Cash on Delivery</option>
+                                <option value="bKash">bKash</option>
+                                <option value="Nagad">Nagad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingSpecialInstructions" class="block text-sm font-medium text-dark-100 mb-2">Special Instructions (Optional)</label>
+                            <textarea id="bookingSpecialInstructions" name="specialInstructions" rows="3" placeholder="Any special requirements or notes" 
+                                      class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-dark-100 placeholder-dark-400 focus:outline-none focus:border-primary-500 transition-colors duration-300 resize-none"></textarea>
+                        </div>
+                        <div class="booking-summary bg-dark-700 border border-dark-600 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-dark-100 mb-4">Booking Summary</h3>
+                            <div class="space-y-3">
+                                <div class="summary-item flex justify-between">
+                                    <span class="text-dark-300">Service:</span>
+                                    <span id="summaryService" class="text-dark-100 font-medium">-</span>
+                                </div>
+                                <div class="summary-item flex justify-between">
+                                    <span class="text-dark-300">Package:</span>
+                                    <span id="summaryPackage" class="text-dark-100 font-medium">-</span>
+                                </div>
+                                <div class="summary-item flex justify-between">
+                                    <span class="text-dark-300">Date & Time:</span>
+                                    <span id="summaryDateTime" class="text-dark-100 font-medium">-</span>
+                                </div>
+                                <div class="summary-item flex justify-between">
+                                    <span class="text-dark-300">Amount:</span>
+                                    <span id="summaryAmount" class="text-primary-400 font-bold">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions flex space-x-4">
+                            <button type="submit" class="flex-1 btn-primary bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center">
+                                <i class="fas fa-check mr-2"></i>
+                                Confirm Booking
+                            </button>
+                            <button type="button" class="flex-1 btn-secondary bg-dark-700 text-dark-100 border border-dark-600 hover:bg-dark-600 hover:border-dark-500 px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center" onclick="closeBookingModal()">
+                                <i class="fas fa-times mr-2"></i>
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast fixed top-4 right-4 z-50 bg-dark-800 border border-dark-700 rounded-xl shadow-2xl p-4 max-w-sm transform translate-x-full transition-all duration-300">
+        <div class="flex items-start space-x-3">
+            <div class="toast-icon flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fas fa-info-circle text-primary-400"></i>
+            </div>
+            <div class="toast-content flex-1 min-w-0">
+                <div class="toast-title text-dark-100 font-bold mb-1">Notification</div>
+                <div class="toast-message text-dark-300 text-sm">This is a notification message.</div>
+            </div>
+            <button class="toast-close flex-shrink-0 text-dark-400 hover:text-dark-100 transition-colors duration-300" onclick="closeToast()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Code -->
+    <script>
+        // AutoClean BD - Main JavaScript
+        // Handles authentication, navigation, and API connections
+
+        // Global variables
+        let currentUser = null;
+        let isAuthenticated = false;
+        const BASE_URL = (location.port && location.port !== '80' && location.port !== '443') ? 'http://localhost/web/' : (window.location.origin + '/web/');
+
+        // Debug: Log the base URL
+        console.log('Base URL:', BASE_URL);
+        console.log('Current location:', window.location.href);
+
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing app...');
+            initializeApp();
+            setupEventListeners();
+            checkAuthenticationStatus();
+            
+            // Add status indicator
+            addStatusIndicator();
+        });
+
+        // Initialize the application
+        function initializeApp() {
+            // Check if user is already logged in
+            const userData = localStorage.getItem('userData');
+            if (userData) {
+                try {
+                    currentUser = JSON.parse(userData);
+                    isAuthenticated = true;
+                    updateNavigationForAuthenticatedUser();
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                    localStorage.removeItem('userData');
+                }
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Login form
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+
+            // Register form
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', handleRegister);
+            }
+
+            // Booking form
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', handleBooking);
+            }
+
+            // Contact form
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleContact);
+            }
+
+            // Modal close events
+            setupModalEvents();
+
+            // Navigation
+            setupNavigation();
+        }
+
+        // Setup modal events
+        function setupModalEvents() {
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+        }
+
+        // Setup navigation
+        function setupNavigation() {
+            // Mobile menu toggle
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    navToggle.classList.toggle('active');
+                });
+            }
+
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // Authentication functions
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const loginData = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                userType: formData.get('userType')
+            };
+
+            // Validate required fields
+            if (!loginData.email || !loginData.password || !loginData.userType) {
+                showToast(
+                    'Missing Information',
+                    'Please fill in all required fields.',
+                    'error'
+                );
+                return;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(loginData.email)) {
+                showToast(
+                    'Invalid Email',
+                    'Please enter a valid email address.',
+                    'error'
+                );
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            submitBtn.disabled = true;
+
+            // Call login API
+            fetch(`${BASE_URL}api/login.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Store user data
+                    currentUser = data.data;
+                    isAuthenticated = true;
+                    localStorage.setItem('userData', JSON.stringify(data.data));
+                    
+                    // Show success message
+                    showToast(
+                        'Welcome Back! 🎉',
+                        `Successfully logged in as ${data.data.first_name}. Redirecting to your dashboard...`,
+                        'success'
+                    );
+                    
+                    // Close modal and redirect based on user type
+                    closeLoginModal();
+                    setTimeout(() => {
+                        redirectToDashboard(data.data.user_type);
+                    }, 2000);
+                } else {
+                    showToast(
+                        'Login Failed',
+                        data.message || 'Please check your email and password and try again.',
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                if (error.message.includes('HTTP error! status: 404')) {
+                    showToast(
+                        'Server Not Found',
+                        'The login service is not available. Please check if the server is running.',
+                        'error'
+                    );
+                } else if (error.message.includes('Failed to fetch')) {
+                    showToast(
+                        'Connection Error',
+                        'Unable to connect to the server. Please check if XAMPP is running and try again.',
+                        'error'
+                    );
+                } else {
+                    showToast(
+                        'Login Error',
+                        'An unexpected error occurred. Please try again later.',
+                        'error'
+                    );
+                }
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const registerData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                password: formData.get('password'),
+                confirmPassword: formData.get('confirmPassword'),
+                userType: formData.get('userType')
+            };
+
+            // Validate required fields
+            const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'password', 'confirmPassword', 'userType'];
+            for (let field of requiredFields) {
+                if (!registerData[field] || registerData[field].trim() === '') {
+                    showToast(
+                        'Missing Information',
+                        `Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()} field.`,
+                        'error'
+                    );
+                    return;
+                }
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(registerData.email)) {
+                showToast(
+                    'Invalid Email',
+                    'Please enter a valid email address.',
+                    'error'
+                );
+                return;
+            }
+
+            // Validate password strength
+            if (registerData.password.length < 6) {
+                showToast(
+                    'Weak Password',
+                    'Password must be at least 6 characters long.',
+                    'error'
+                );
+                return;
+            }
+
+            // Validate passwords match
+            if (registerData.password !== registerData.confirmPassword) {
+                showToast(
+                    'Password Mismatch',
+                    'The passwords you entered do not match. Please try again.',
+                    'error'
+                );
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+            submitBtn.disabled = true;
+
+            // Call register API
+            fetch(`${BASE_URL}api/register.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(registerData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    showToast(
+                        'Account Created! 🎉',
+                        `Welcome to AutoClean BD, ${registerData.firstName}! Your account has been successfully created. You can now log in.`,
+                        'success'
+                    );
+                    closeRegisterModal();
+                    setTimeout(() => {
+                        openLoginModal();
+                    }, 1000);
+                } else {
+                    showToast(
+                        'Registration Failed',
+                        data.message || 'Unable to create your account. Please try again with different information.',
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Registration error:', error);
+                if (error.message.includes('HTTP error! status: 404')) {
+                    showToast(
+                        'Server Not Found',
+                        'The registration service is not available. Please check if the server is running.',
+                        'error'
+                    );
+                } else if (error.message.includes('Failed to fetch')) {
+                    showToast(
+                        'Connection Error',
+                        'Unable to connect to the server. Please check if XAMPP is running and try again.',
+                        'error'
+                    );
+                } else {
+                    showToast(
+                        'Registration Error',
+                        'An unexpected error occurred. Please try again later.',
+                        'error'
+                    );
+                }
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            
+            // Check if user is authenticated
+            if (!isAuthenticated) {
+                showToast(
+                    'Login Required',
+                    'Please log in to your account to book a service.',
+                    'warning'
+                );
+                closeBookingModal();
+                openLoginModal();
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const bookingData = {
+                vehicleType: formData.get('vehicleType'),
+                servicePackage: formData.get('servicePackage'),
+                scheduledDate: formData.get('scheduledDate'),
+                scheduledTime: formData.get('scheduledTime'),
+                address: formData.get('address'),
+                paymentMethod: formData.get('paymentMethod'),
+                specialInstructions: formData.get('specialInstructions'),
+                customerId: currentUser.id
+            };
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+            submitBtn.disabled = true;
+
+            // Call booking API
+            fetch(`${BASE_URL}api/book_service.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookingData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(
+                        'Booking Confirmed! 🎉',
+                        'Your service has been successfully booked. You will receive a confirmation email shortly.',
+                        'success'
+                    );
+                    closeBookingModal();
+                    // Redirect to customer dashboard
+                    if (currentUser.user_type === 'customer') {
+                        setTimeout(() => {
+                            window.location.href = 'customer/dashboard.html';
+                        }, 2000);
+                    }
+                } else {
+                    showToast(
+                        'Booking Failed',
+                        data.message || 'Unable to process your booking. Please try again.',
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Booking error:', error);
+                showToast(
+                    'Connection Error',
+                    'Unable to connect to the server. Please check your internet connection and try again.',
+                    'error'
+                );
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        // Contact form handler
+        function handleContact(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const contactData = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                message: formData.get('message')
+            };
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+
+            // Call contact API
+            fetch(`${BASE_URL}api/contact.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contactData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(
+                        'Message Sent! 📧',
+                        'Thank you for contacting us. We will get back to you within 24 hours.',
+                        'success'
+                    );
+                    e.target.reset();
+                } else {
+                    showToast(
+                        'Message Failed',
+                        data.message || 'Unable to send your message. Please try again.',
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Contact error:', error);
+                showToast(
+                    'Connection Error',
+                    'Unable to connect to the server. Please check your internet connection and try again.',
+                    'error'
+                );
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        // Navigation functions
+        function redirectToDashboard(userType) {
+            switch (userType) {
+                case 'admin':
+                    window.location.href = 'admin/dashboard.html';
+                    break;
+                case 'customer':
+                    window.location.href = 'customer/dashboard.html';
+                    break;
+                case 'worker':
+                    window.location.href = 'worker/dashboard.html';
+                    break;
+                default:
+                    window.location.href = 'customer/dashboard.html';
+            }
+        }
+
+        function updateNavigationForAuthenticatedUser() {
+            const navButtons = document.querySelector('.nav-buttons');
+            if (navButtons && currentUser) {
+                navButtons.innerHTML = `
+                    <span class="user-welcome">Welcome, ${currentUser.first_name}!</span>
+                    <button class="btn-secondary" onclick="goToDashboard()">Dashboard</button>
+                    <button class="btn-primary" onclick="logout()">Logout</button>
+                `;
+            }
+        }
+
+        function goToDashboard() {
+            if (currentUser) {
+                redirectToDashboard(currentUser.user_type);
+            }
+        }
+
+        function logout() {
+            // Call logout API
+            fetch(`${BASE_URL}api/logout.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Clear local storage
+                localStorage.removeItem('userData');
+                currentUser = null;
+                isAuthenticated = false;
+                
+                // Update navigation
+                const navButtons = document.querySelector('.nav-buttons');
+                if (navButtons) {
+                    navButtons.innerHTML = `
+                        <button class="btn-secondary" onclick="openLoginModal()">Login</button>
+                        <button class="btn-primary" onclick="openRegisterModal()">Register</button>
+                    `;
+                }
+                
+                showToast(
+                    'Logged Out',
+                    'You have been successfully logged out. Come back soon!',
+                    'info'
+                );
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+                // Still clear local storage even if API call fails
+                localStorage.removeItem('userData');
+                currentUser = null;
+                isAuthenticated = false;
+                showToast(
+                    'Logged Out',
+                    'You have been successfully logged out. Come back soon!',
+                    'info'
+                );
+            });
+        }
+
+        function checkAuthenticationStatus() {
+            const userData = localStorage.getItem('userData');
+            if (userData) {
+                try {
+                    currentUser = JSON.parse(userData);
+                    isAuthenticated = true;
+                    updateNavigationForAuthenticatedUser();
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                    localStorage.removeItem('userData');
+                }
+            }
+        }
+
+        // Modal functions
+        function openLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                document.getElementById('loginEmail').focus();
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+                document.getElementById('loginForm').reset();
+                document.body.style.overflow = '';
+            }
+        }
+
+        function openRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                document.getElementById('registerFirstName').focus();
+            }
+        }
+
+        function closeRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+                document.getElementById('registerForm').reset();
+                document.body.style.overflow = '';
+            }
+        }
+
+        function openBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                // Close any other open modals first
+                closeAllModals();
+                
+                // Show the booking modal
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                document.body.style.overflow = 'hidden';
+                
+                // Set minimum date to today
+                const today = new Date().toISOString().split('T')[0];
+                const dateInput = document.getElementById('bookingDate');
+                if (dateInput) {
+                    dateInput.min = today;
+                }
+                
+                // Scroll to top of modal
+                modal.scrollTop = 0;
+                
+                console.log('Booking modal opened successfully');
+            } else {
+                console.error('Booking modal not found');
+            }
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.getElementById('bookingForm').reset();
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeAllModals() {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                modal.style.opacity = '0';
+            });
+            document.body.style.overflow = '';
+        }
+
+        function switchToRegister() {
+            closeLoginModal();
+            openRegisterModal();
+        }
+
+        function switchToLogin() {
+            closeRegisterModal();
+            openLoginModal();
+        }
+
+        // Service booking functions
+        function bookService(serviceType) {
+            console.log('bookService called with:', serviceType);
+            
+            // Always open booking modal, authentication will be checked during form submission
+            openBookingModal();
+            
+            // Pre-select the service
+            const serviceSelect = document.getElementById('bookingServicePackage');
+            if (serviceSelect) {
+                serviceSelect.value = serviceType;
+                updateBookingSummary();
+                console.log('Service pre-selected:', serviceType);
+            } else {
+                console.error('Service select element not found');
+            }
+        }
+
+        function updateBookingSummary() {
+            const vehicleType = document.getElementById('bookingVehicleType').value;
+            const servicePackage = document.getElementById('bookingServicePackage').value;
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            
+            // Update summary display
+            document.getElementById('summaryService').textContent = vehicleType || '-';
+            document.getElementById('summaryPackage').textContent = servicePackage || '-';
+            document.getElementById('summaryDateTime').textContent = 
+                (date && time) ? `${date} at ${time}` : '-';
+            
+            // Calculate and display amount
+            let amount = 0;
+            if (vehicleType && servicePackage) {
+                const prices = {
+                    'car': { 'Basic': 299, 'Premium': 599, 'Detailing': 1299 },
+                    'bike': { 'Basic': 199, 'Premium': 399, 'Detailing': 899 }
+                };
+                amount = prices[vehicleType][servicePackage] || 0;
+            }
+            document.getElementById('summaryAmount').textContent = amount > 0 ? `৳${amount}` : '-';
+        }
+
+        // Utility functions
+        function showToast(title, message, type = 'info') {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                // Update toast content
+                const icon = toast.querySelector('.toast-icon i');
+                const titleEl = toast.querySelector('.toast-title');
+                const messageEl = toast.querySelector('.toast-message');
+                
+                // Set icon based on type
+                const icons = {
+                    'success': 'fas fa-check-circle',
+                    'error': 'fas fa-exclamation-circle',
+                    'warning': 'fas fa-exclamation-triangle',
+                    'info': 'fas fa-info-circle'
+                };
+                
+                icon.className = icons[type] || icons.info;
+                titleEl.textContent = title;
+                messageEl.textContent = message;
+                
+                // Update toast class and color
+                toast.className = `toast fixed top-4 right-4 z-50 bg-dark-800 border border-dark-700 rounded-xl shadow-2xl p-4 max-w-sm transform translate-x-full transition-all duration-300`;
+                
+                // Add color based on type
+                if (type === 'success') {
+                    toast.style.borderColor = '#10b981';
+                } else if (type === 'error') {
+                    toast.style.borderColor = '#ef4444';
+                } else if (type === 'warning') {
+                    toast.style.borderColor = '#f59e0b';
+                }
+                
+                // Show toast with animation
+                toast.style.display = 'flex';
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(0)';
+                }, 10);
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    hideToast();
+                }, 5000);
+            }
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 400);
+            }
+        }
+
+        function closeToast() {
+            hideToast();
+        }
+
+        function scrollToServices() {
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+                servicesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Test function for toast notifications
+        function testToast() {
+            const toastTypes = [
+                {
+                    title: 'Welcome Back! 🎉',
+                    message: 'Successfully logged in as John Doe. Redirecting to your dashboard...',
+                    type: 'success'
+                },
+                {
+                    title: 'Account Created! 🎉',
+                    message: 'Welcome to AutoClean BD, Sarah! Your account has been successfully created.',
+                    type: 'success'
+                },
+                {
+                    title: 'Login Failed',
+                    message: 'Please check your email and password and try again.',
+                    type: 'error'
+                },
+                {
+                    title: 'Login Required',
+                    message: 'Please log in to your account to book a service.',
+                    type: 'warning'
+                },
+                {
+                    title: 'Message Sent! 📧',
+                    message: 'Thank you for contacting us. We will get back to you within 24 hours.',
+                    type: 'success'
+                }
+            ];
+            
+            const randomToast = toastTypes[Math.floor(Math.random() * toastTypes.length)];
+            showToast(randomToast.title, randomToast.message, randomToast.type);
+        }
+
+        // Test backend connection
+        function testBackendConnection() {
+            console.log('Testing backend connection to:', `${BASE_URL}api/test_connection.php`);
+            
+            // Show loading state
+            const testBtn = document.querySelector('button[onclick="testBackendConnection()"]');
+            if (testBtn) {
+                const originalText = testBtn.innerHTML;
+                testBtn.innerHTML = 'Testing...';
+                testBtn.disabled = true;
+                
+                setTimeout(() => {
+                    testBtn.innerHTML = originalText;
+                    testBtn.disabled = false;
+                }, 3000);
+            }
+            
+            fetch(`${BASE_URL}api/test_connection.php`)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Backend test result:', data);
+                    if (data.success) {
+                        showToast(
+                            'Backend Connected! ✅',
+                            `Database: ${data.data.database}, Tables: ${data.data.total_tables}/${data.data.expected_tables}`,
+                            'success'
+                        );
+                    } else {
+                        showToast(
+                            'Backend Error',
+                            data.message || 'Unable to connect to backend',
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Backend connection error:', error);
+                    if (error.message.includes('HTTP error! status: 404')) {
+                        showToast(
+                            'Server Not Found',
+                            'The test service is not available. Please check if the server is running.',
+                            'error'
+                        );
+                    } else if (error.message.includes('Failed to fetch')) {
+                        showToast(
+                            'Connection Failed',
+                            'Unable to reach the server. Please check if XAMPP is running and the web folder is in the correct location.',
+                            'error'
+                        );
+                    } else {
+                        showToast(
+                            'Test Error',
+                            'An unexpected error occurred: ' + error.message,
+                            'error'
+                        );
+                    }
+                });
+        }
+
+        // Add status indicator
+        function addStatusIndicator() {
+            const nav = document.querySelector('nav');
+            if (nav) {
+                const statusDiv = document.createElement('div');
+                statusDiv.className = 'fixed top-20 right-4 z-40 bg-dark-800 border border-dark-700 rounded-lg p-2 text-xs text-dark-300';
+                statusDiv.innerHTML = `
+                    <div>Status: <span id="connectionStatus" class="text-yellow-400">Checking...</span></div>
+                    <div>URL: <span class="text-primary-400">${BASE_URL}</span></div>
+                `;
+                document.body.appendChild(statusDiv);
+                
+                // Test connection on load
+                setTimeout(() => {
+                    testConnectionStatus();
+                }, 1000);
+            }
+        }
+
+        // Test connection status
+        function testConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            if (!statusElement) return;
+            
+            fetch(`${BASE_URL}api/test_connection.php`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        statusElement.textContent = 'Connected';
+                        statusElement.className = 'text-green-400';
+                    } else {
+                        statusElement.textContent = 'Error';
+                        statusElement.className = 'text-red-400';
+                    }
+                })
+                .catch(error => {
+                    statusElement.textContent = 'Offline';
+                    statusElement.className = 'text-red-400';
+                });
+        }
+
+        // Add event listeners for booking form updates
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                const vehicleSelect = document.getElementById('bookingVehicleType');
+                const serviceSelect = document.getElementById('bookingServicePackage');
+                const dateInput = document.getElementById('bookingDate');
+                const timeSelect = document.getElementById('bookingTime');
+                
+                [vehicleSelect, serviceSelect, dateInput, timeSelect].forEach(element => {
+                    if (element) {
+                        element.addEventListener('change', updateBookingSummary);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

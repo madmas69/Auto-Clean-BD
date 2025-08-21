@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - AutoClean BD</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-car-wash"></i>
+                <span>AutoClean BD</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="userName">Customer</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" data-section="overview">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#bookings" class="nav-item" data-section="bookings">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>My Bookings</span>
+                </a>
+                <a href="#profile" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#reviews" class="nav-item" data-section="reviews">
+                    <i class="fas fa-star"></i>
+                    <span>My Reviews</span>
+                </a>
+                <a href="#support" class="nav-item" data-section="support">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+                <div class="section-header">
+                    <h1>Dashboard Overview</h1>
+                    <p>Welcome back! Here's your booking summary and recent activity.</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalBookings">0</h3>
+                            <p>Total Bookings</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="completedBookings">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="pendingBookings">0</h3>
+                            <p>Pending</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalSpent">৳0</h3>
+                            <p>Total Spent</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings -->
+                <div class="recent-bookings">
+                    <div class="section-title">
+                        <h2>Recent Bookings</h2>
+                        <a href="#bookings" class="view-all-btn">View All</a>
+                    </div>
+                    <div class="bookings-list" id="recentBookingsList">
+                        <!-- Bookings will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2>Quick Actions</h2>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="openBookingModal()">
+                            <i class="fas fa-plus"></i>
+                            Book New Service
+                        </button>
+                        <button class="action-btn secondary" onclick="showSection('profile')">
+                            <i class="fas fa-edit"></i>
+                            Update Profile
+                        </button>
+                        <button class="action-btn secondary" onclick="showSection('support')">
+                            <i class="fas fa-question-circle"></i>
+                            Get Help
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bookings Section -->
+            <section id="bookings" class="dashboard-section">
+                <div class="section-header">
+                    <h1>My Bookings</h1>
+                    <p>Track all your vehicle wash bookings and their current status.</p>
+                </div>
+
+                <!-- Booking Filters -->
+                <div class="booking-filters">
+                    <select id="statusFilter" onchange="filterBookings()">
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <button class="refresh-btn" onclick="loadBookings()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+
+                <!-- Bookings Table -->
+                <div class="bookings-table-container">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Service</th>
+                                <th>Package</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Worker</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Bookings will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Profile Settings</h1>
+                    <p>Update your personal information and preferences.</p>
+                </div>
+
+                <div class="profile-form-container">
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleType">Vehicle Type</label>
+                            <select id="vehicleType" name="vehicleType" required>
+                                <option value="car">Car</option>
+                                <option value="bike">Bike</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i>
+                                Update Profile
+                            </button>
+                            <button type="button" class="btn-secondary" onclick="resetProfileForm()">
+                                <i class="fas fa-undo"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section id="reviews" class="dashboard-section">
+                <div class="section-header">
+                    <h1>My Reviews</h1>
+                    <p>View and manage your service reviews and ratings.</p>
+                </div>
+
+                <div class="reviews-container">
+                    <div class="reviews-list" id="reviewsList">
+                        <!-- Reviews will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support Section -->
+            <section id="support" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Customer Support</h1>
+                    <p>Get help and contact our support team.</p>
+                </div>
+
+                <div class="support-container">
+                    <div class="support-card">
+                        <div class="support-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Call Us</h3>
+                        <p>Speak directly with our support team</p>
+                        <a href="tel:+8801234567890" class="support-link">+880 1234 567 890</a>
+                    </div>
+                    <div class="support-card">
+                        <div class="support-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email Us</h3>
+                        <p>Send us an email for detailed support</p>
+                        <a href="mailto:support@autocleanbd.com" class="support-link">support@autocleanbd.com</a>
+                    </div>
+                    <div class="support-card">
+                        <div class="support-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Live Chat</h3>
+                        <p>Chat with our support team online</p>
+                        <button class="support-link" onclick="openLiveChat()">Start Chat</button>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>How do I cancel a booking?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>You can cancel a booking up to 2 hours before the scheduled time. Contact our support team or use the cancellation option in your booking details.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>What payment methods do you accept?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>We accept Cash on Delivery, bKash, and Nagad payments. Payment is collected after service completion.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>How long does a wash service take?</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Basic wash takes 30-45 minutes, Premium wash takes 45-60 minutes, and Detailing takes 2-3 hours depending on vehicle size.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Book New Service</h2>
+                <span class="close" onclick="closeBookingModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="modalVehicleType">Vehicle Type</label>
+                        <select id="modalVehicleType" name="vehicleType" required>
+                            <option value="">Select Vehicle Type</option>
+                            <option value="car">Car</option>
+                            <option value="bike">Bike</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalServicePackage">Service Package</label>
+                        <select id="modalServicePackage" name="servicePackage" required>
+                            <option value="">Select Package</option>
+                            <option value="Basic">Basic Wash</option>
+                            <option value="Premium">Premium Wash</option>
+                            <option value="Detailing">Detailing</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalDate">Preferred Date</label>
+                            <input type="date" id="modalDate" name="scheduledDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalTime">Preferred Time</label>
+                            <select id="modalTime" name="scheduledTime" required>
+                                <option value="">Select Time</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                                <option value="17:00">5:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalPaymentMethod">Payment Method</label>
+                        <select id="modalPaymentMethod" name="paymentMethod" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="Cash on Delivery">Cash on Delivery</option>
+                            <option value="bKash">bKash</option>
+                            <option value="Nagad">Nagad</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalSpecialInstructions">Special Instructions (Optional)</label>
+                        <textarea id="modalSpecialInstructions" name="specialInstructions" rows="3"></textarea>
+                    </div>
+                    <div class="booking-summary">
+                        <h3>Booking Summary</h3>
+                        <div class="summary-item">
+                            <span>Service:</span>
+                            <span id="summaryService">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Package:</span>
+                            <span id="summaryPackage">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Date & Time:</span>
+                            <span id="summaryDateTime">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Amount:</span>
+                            <span id="summaryAmount">-</span>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-check"></i>
+                            Confirm Booking
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="closeBookingModal()">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <!-- JavaScript Code -->
+    <script>
+        // Authentication utilities for AutoClean BD
+
+        // Global variables
+        const BASE_URL = (location.port && location.port !== '80' && location.port !== '443') ? 'http://localhost/web/' : (window.location.origin + '/web/');
+
+        // Check if user is authenticated and has correct role
+        function checkAuth(requiredRole = null) {
+            const userData = localStorage.getItem('userData');
+            const userType = localStorage.getItem('userType');
+            
+            if (!userData || !userType) {
+                redirectToLogin();
+                return null;
+            }
+            
+            try {
+                const user = JSON.parse(userData);
+                
+                // Check if user type matches required role
+                if (requiredRole && user.user_type !== requiredRole) {
+                    showToast('Access denied. You do not have permission to view this page.', 'error');
+                    redirectToDashboard(user.user_type);
+                    return null;
+                }
+                
+                return user;
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                localStorage.removeItem('userData');
+                localStorage.removeItem('userType');
+                redirectToLogin();
+                return null;
+            }
+        }
+
+        // Redirect to appropriate dashboard based on user type
+        function redirectToDashboard(userType) {
+            switch (userType) {
+                case 'admin':
+                    window.location.href = '../admin/dashboard.html';
+                    break;
+                case 'customer':
+                    window.location.href = '../customer/dashboard.html';
+                    break;
+                case 'worker':
+                    window.location.href = '../worker/dashboard.html';
+                    break;
+                default:
+                    window.location.href = '../index.html';
+            }
+        }
+
+        // Redirect to login page
+        function redirectToLogin() {
+            window.location.href = '../login.html';
+        }
+
+        // Logout function
+        function logout() {
+            // Call logout API
+            fetch(`${BASE_URL}api/logout.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Clear local storage regardless of API response
+                localStorage.removeItem('userData');
+                localStorage.removeItem('userType');
+                
+                showToast('Logged out successfully.', 'success');
+                
+                // Redirect to login page
+                setTimeout(() => {
+                    window.location.href = '../login.html';
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+                // Still clear local storage even if API call fails
+                localStorage.removeItem('userData');
+                localStorage.removeItem('userType');
+                
+                showToast('Logged out successfully.', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = '../login.html';
+                }, 1000);
+            });
+        }
+
+        // Update navigation for authenticated user
+        function updateNavigationForUser(user) {
+            const userNameElement = document.getElementById('userName');
+            if (userNameElement && user) {
+                userNameElement.textContent = `${user.first_name} ${user.last_name}`;
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.textContent = message;
+                toast.className = `toast ${type}`;
+                toast.style.display = 'block';
+                
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            } else {
+                // Fallback alert if toast element doesn't exist
+                alert(message);
+            }
+        }
+
+        // Initialize authentication for dashboard pages
+        function initAuth(requiredRole = null) {
+            const user = checkAuth(requiredRole);
+            if (user) {
+                updateNavigationForUser(user);
+                return user;
+            }
+            return null;
+        }
+
+        // Customer Dashboard JavaScript
+
+        // Global variables
+        let currentUser = null;
+        let dashboardData = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            initializeNavigation();
+            loadDashboardData();
+            setupEventListeners();
+        });
+
+        // Check user authentication
+        function checkAuth() {
+            currentUser = initAuth('customer');
+            if (!currentUser) {
+                return;
+            }
+        }
+
+        // Initialize navigation
+        function initializeNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+        }
+
+        // Show section
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Load section-specific data
+            switch(sectionId) {
+                case 'overview':
+                    loadDashboardData();
+                    break;
+                case 'bookings':
+                    loadBookings();
+                    break;
+                case 'profile':
+                    loadProfile();
+                    break;
+                case 'reviews':
+                    loadReviews();
+                    break;
+                case 'support':
+                    // Support section is static
+                    break;
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                showLoading('overview');
+                
+                const response = await fetch(`${BASE_URL}api/get_dashboard_data.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: currentUser.id
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    dashboardData = data.data;
+                    updateDashboardStats();
+                    updateRecentBookings();
+                } else {
+                    showToast(data.message || 'Failed to load dashboard data', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showToast('Failed to load dashboard data', 'error');
+            } finally {
+                hideLoading('overview');
+            }
+        }
+
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            if (!dashboardData) return;
+            
+            document.getElementById('totalBookings').textContent = dashboardData.stats.totalBookings;
+            document.getElementById('completedBookings').textContent = dashboardData.stats.completedBookings;
+            document.getElementById('pendingBookings').textContent = dashboardData.stats.pendingBookings;
+            document.getElementById('totalSpent').textContent = dashboardData.stats.totalSpent;
+        }
+
+        // Update recent bookings
+        function updateRecentBookings() {
+            if (!dashboardData) return;
+            
+            const container = document.getElementById('recentBookingsList');
+            container.innerHTML = '';
+            
+            if (dashboardData.recentBookings.length === 0) {
+                container.innerHTML = '<p class="no-data">No recent bookings found.</p>';
+                return;
+            }
+            
+            dashboardData.recentBookings.forEach(booking => {
+                const bookingItem = createBookingItem(booking);
+                container.appendChild(bookingItem);
+            });
+        }
+
+        // Create booking item
+        function createBookingItem(booking) {
+            const div = document.createElement('div');
+            div.className = 'booking-item';
+            
+            const statusClass = `status-${booking.status}`;
+            const statusText = booking.status.charAt(0).toUpperCase() + booking.status.slice(1);
+            
+            div.innerHTML = `
+                <div class="booking-header">
+                    <span class="booking-id">${booking.id}</span>
+                    <span class="booking-status ${statusClass}">${statusText}</span>
+                </div>
+                <div class="booking-details">
+                    <div class="booking-detail">
+                        <span class="label">Service</span>
+                        <span class="value">${booking.service}</span>
+                    </div>
+                    <div class="booking-detail">
+                        <span class="label">Package</span>
+                        <span class="value">${booking.package}</span>
+                    </div>
+                    <div class="booking-detail">
+                        <span class="label">Date</span>
+                        <span class="value">${booking.date}</span>
+                    </div>
+                    <div class="booking-detail">
+                        <span class="label">Amount</span>
+                        <span class="value">${booking.amount}</span>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Load bookings
+        async function loadBookings() {
+            try {
+                showLoading('bookings');
+                
+                const response = await fetch(`${BASE_URL}api/get_dashboard_data.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: currentUser.id
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateBookingsTable(data.data.allBookings);
+                } else {
+                    showToast(data.message || 'Failed to load bookings', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                showToast('Failed to load bookings', 'error');
+            } finally {
+                hideLoading('bookings');
+            }
+        }
+
+        // Update bookings table
+        function updateBookingsTable(bookings) {
+            const tbody = document.getElementById('bookingsTableBody');
+            tbody.innerHTML = '';
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="no-data">No bookings found.</td></tr>';
+                return;
+            }
+            
+            bookings.forEach(booking => {
+                const row = createBookingRow(booking);
+                tbody.appendChild(row);
+            });
+        }
+
+        // Create booking row
+        function createBookingRow(booking) {
+            const tr = document.createElement('tr');
+            
+            const statusClass = `status-${booking.status}`;
+            const statusText = booking.status.charAt(0).toUpperCase() + booking.status.slice(1);
+            
+            tr.innerHTML = `
+                <td>${booking.id}</td>
+                <td>${booking.service}</td>
+                <td>${booking.package}</td>
+                <td>${booking.scheduledDate} ${booking.scheduledTime}</td>
+                <td><span class="booking-status ${statusClass}">${statusText}</span></td>
+                <td>${booking.worker}</td>
+                <td>${booking.amount}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn secondary" onclick="viewBooking('${booking.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        ${booking.status === 'completed' ? `
+                            <button class="action-btn primary" onclick="addReview('${booking.id}')">
+                                <i class="fas fa-star"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                </td>
+            `;
+            
+            return tr;
+        }
+
+        // Filter bookings
+        function filterBookings() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            if (!dashboardData) return;
+            
+            let filteredBookings = dashboardData.allBookings;
+            
+            if (statusFilter) {
+                filteredBookings = filteredBookings.filter(booking => booking.status === statusFilter);
+            }
+            
+            updateBookingsTable(filteredBookings);
+        }
+
+        // Load profile
+        function loadProfile() {
+            if (!currentUser) return;
+            
+            document.getElementById('firstName').value = currentUser.firstName || '';
+            document.getElementById('lastName').value = currentUser.lastName || '';
+            document.getElementById('email').value = currentUser.email || '';
+            document.getElementById('phone').value = currentUser.phone || '';
+            document.getElementById('address').value = currentUser.address || '';
+            document.getElementById('vehicleType').value = currentUser.vehicleType || 'car';
+        }
+
+        // Load reviews
+        async function loadReviews() {
+            try {
+                showLoading('reviews');
+                
+                const response = await fetch(`${BASE_URL}api/get_reviews.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: currentUser.id
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateReviewsList(data.data.reviews);
+                } else {
+                    showToast(data.message || 'Failed to load reviews', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+                showToast('Failed to load reviews', 'error');
+            } finally {
+                hideLoading('reviews');
+            }
+        }
+
+        // Update reviews list
+        function updateReviewsList(reviews) {
+            const container = document.getElementById('reviewsList');
+            container.innerHTML = '';
+            
+            if (reviews.length === 0) {
+                container.innerHTML = '<p class="no-data">No reviews found.</p>';
+                return;
+            }
+            
+            reviews.forEach(review => {
+                const reviewItem = createReviewItem(review);
+                container.appendChild(reviewItem);
+            });
+        }
+
+        // Create review item
+        function createReviewItem(review) {
+            const div = document.createElement('div');
+            div.className = 'review-item';
+            
+            const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            
+            div.innerHTML = `
+                <div class="review-header">
+                    <div class="review-rating">
+                        <span class="stars">${stars}</span>
+                        <span class="rating-text">${review.rating}/5</span>
+                    </div>
+                    <span class="review-date">${review.date}</span>
+                </div>
+                <div class="review-service">${review.service}</div>
+                ${review.comment ? `<div class="review-comment">${review.comment}</div>` : ''}
+            `;
+            
+            return div;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Profile form submission
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', handleProfileUpdate);
+            }
+            
+            // Booking form submission
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', handleBookingSubmission);
+            }
+            
+            // Booking modal form changes
+            const modalVehicleType = document.getElementById('modalVehicleType');
+            const modalServicePackage = document.getElementById('modalServicePackage');
+            
+            if (modalVehicleType && modalServicePackage) {
+                modalVehicleType.addEventListener('change', updateBookingSummary);
+                modalServicePackage.addEventListener('change', updateBookingSummary);
+            }
+        }
+
+        // Handle profile update
+        async function handleProfileUpdate(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const profileData = {
+                userId: currentUser.id,
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                vehicleType: formData.get('vehicleType')
+            };
+            
+            try {
+                const response = await fetch(`${BASE_URL}api/update_profile.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(profileData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Profile updated successfully!', 'success');
+                    currentUser = data.data;
+                    localStorage.setItem('user', JSON.stringify(data.data));
+                    document.getElementById('userName').textContent = data.data.firstName + ' ' + data.data.lastName;
+                } else {
+                    showToast(data.message || 'Failed to update profile', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showToast('Failed to update profile', 'error');
+            }
+        }
+
+        // Handle booking submission
+        async function handleBookingSubmission(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const bookingData = {
+                userId: currentUser.id,
+                customerName: currentUser.firstName + ' ' + currentUser.lastName,
+                customerPhone: currentUser.phone,
+                customerAddress: currentUser.address,
+                vehicleType: formData.get('vehicleType'),
+                servicePackage: formData.get('servicePackage'),
+                scheduledDate: formData.get('scheduledDate'),
+                scheduledTime: formData.get('scheduledTime'),
+                paymentMethod: formData.get('paymentMethod'),
+                specialInstructions: formData.get('specialInstructions')
+            };
+            
+            try {
+                const response = await fetch(`${BASE_URL}api/book_service.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Booking created successfully!', 'success');
+                    closeBookingModal();
+                    loadDashboardData(); // Refresh dashboard
+                } else {
+                    showToast(data.message || 'Failed to create booking', 'error');
+                }
+            } catch (error) {
+                console.error('Error creating booking:', error);
+                showToast('Failed to create booking', 'error');
+            }
+        }
+
+        // Update booking summary
+        function updateBookingSummary() {
+            const vehicleType = document.getElementById('modalVehicleType').value;
+            const servicePackage = document.getElementById('modalServicePackage').value;
+            const date = document.getElementById('modalDate').value;
+            const time = document.getElementById('modalTime').value;
+            
+            // Update summary fields
+            document.getElementById('summaryService').textContent = vehicleType ? `${vehicleType.charAt(0).toUpperCase() + vehicleType.slice(1)} Wash` : '-';
+            document.getElementById('summaryPackage').textContent = servicePackage || '-';
+            document.getElementById('summaryDateTime').textContent = (date && time) ? `${date} ${time}` : '-';
+            
+            // Calculate and update amount
+            if (vehicleType && servicePackage) {
+                const amount = calculateAmount(vehicleType, servicePackage);
+                document.getElementById('summaryAmount').textContent = `৳${amount}`;
+            } else {
+                document.getElementById('summaryAmount').textContent = '-';
+            }
+        }
+
+        // Calculate booking amount
+        function calculateAmount(vehicleType, servicePackage) {
+            const prices = {
+                'Basic': { car: 299, bike: 199 },
+                'Premium': { car: 599, bike: 399 },
+                'Detailing': { car: 1299, bike: 899 }
+            };
+            
+            return prices[servicePackage]?.[vehicleType] || 0;
+        }
+
+        // Booking modal functions
+        function openBookingModal() {
+            document.getElementById('bookingModal').style.display = 'block';
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('modalDate').min = today;
+            
+            // Reset form
+            document.getElementById('bookingForm').reset();
+            updateBookingSummary();
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.getElementById('bookingForm').reset();
+        }
+
+        // Reset profile form
+        function resetProfileForm() {
+            loadProfile();
+        }
+
+        // View booking details
+        function viewBooking(bookingId) {
+            showToast(`Viewing booking ${bookingId}`, 'default');
+            // Implement booking details view
+        }
+
+        // Add review
+        function addReview(bookingId) {
+            showToast(`Adding review for booking ${bookingId}`, 'default');
+            // Implement review form
+        }
+
+        // Refresh jobs (for worker dashboard compatibility)
+        function refreshJobs() {
+            loadDashboardData();
+        }
+
+        // Open live chat
+        function openLiveChat() {
+            showToast('Live chat feature coming soon!', 'default');
+        }
+
+        // Loading functions
+        function showLoading(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('loading');
+            }
+        }
+
+        function hideLoading(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('loading');
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target === modal) {
+                closeBookingModal();
+            }
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeBookingModal();
+            }
+        });
+    </script>
+</body>
+</html> 

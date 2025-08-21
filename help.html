@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - AutoClean BD</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .page-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            padding: 2rem 0;
+        }
+        
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .help-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .help-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .help-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+        }
+        
+        .help-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .help-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .help-link:hover {
+            color: #10b981;
+            transform: translateX(5px);
+        }
+        
+        .contact-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .contact-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-value {
+            color: #cbd5e1;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="content-container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            
+            <div class="page-header">
+                <h1 class="page-title">Help Center</h1>
+                <p class="page-subtitle">Get the support you need for our vehicle washing services</p>
+            </div>
+            
+            <div class="help-grid">
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="help-title">User Guide</h3>
+                    <p class="help-description">Learn how to use our platform effectively, from booking services to managing your account.</p>
+                    <a href="faq.html" class="help-link">
+                        Read Guide <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="help-title">FAQ</h3>
+                    <p class="help-description">Find answers to frequently asked questions about our services, pricing, and policies.</p>
+                    <a href="faq.html" class="help-link">
+                        View FAQ <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="help-title">Video Tutorials</h3>
+                    <p class="help-description">Watch step-by-step video guides on how to book services and use our platform features.</p>
+                    <a href="#" class="help-link">
+                        Watch Videos <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="help-title">Troubleshooting</h3>
+                    <p class="help-description">Common issues and their solutions to help you resolve problems quickly.</p>
+                    <a href="#" class="help-link">
+                        Troubleshoot <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="help-title">Documentation</h3>
+                    <p class="help-description">Detailed documentation for advanced users and technical information.</p>
+                    <a href="#" class="help-link">
+                        Read Docs <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="help-title">Community</h3>
+                    <p class="help-description">Connect with other users, share experiences, and get community support.</p>
+                    <a href="#" class="help-link">
+                        Join Community <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <h2 class="contact-title">Need More Help?</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-label">Phone Support</div>
+                        <div class="contact-value">+880 1234 567 890</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-label">Email Support</div>
+                        <div class="contact-value">support@autocleanbd.com</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <div class="contact-label">Live Chat</div>
+                        <div class="contact-value">Available 9 AM - 6 PM</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-label">Office Address</div>
+                        <div class="contact-value">Bashundhara, Dhaka</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
